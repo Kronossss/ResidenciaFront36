@@ -1,0 +1,128 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+nav a:hover {
+    background-color: #4CAF50;
+}
+
+/* Estilos do Menu Expansivo */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+.menu {
+    display: flex;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    .menu {
+        display: none;  /* Menu oculto em telas menores */
+        flex-direction: column;
+        width: 100%;
+        background-color: #333;
+        position: absolute;
+        top: 50px;  /* Abaixo do cabeçalho */
+        left: 0;
+    }
+
+    .menu a {
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        display: block;
+    }
+
+    .hamburger {
+        display: flex;  /* Mostra o ícone do menu hambúrguer em telas menores */
+    }
+}
+
+main {
+    padding: 20px;
+}
+
+/* Estilo das Seções de Conteúdo */
+.content-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content-section h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Estilo da Calculadora de IMC */
+.imc-calculator {
+    margin: 20px 0;
+}
+
+.imc-calculator input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.imc-result {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo do Botão */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
