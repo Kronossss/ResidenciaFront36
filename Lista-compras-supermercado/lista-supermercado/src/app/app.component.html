@@ -1,7 +1,6 @@
 <div class="container">
   <h1>Lista de Compras do Supermercado</h1>
 
-  <!-- Input para adicionar novo item -->
   <div class="input-group">
     <input [(ngModel)]="newItem" placeholder="Adicione um item..." />
     <button (click)="addItem()">Adicionar</button>
@@ -10,22 +9,29 @@
   <!-- Lista de itens não comprados -->
   <h2>Itens a Comprar</h2>
   <ul>
-    <li *ngFor="let item of shoppingListService.getUnboughtItems(); let i = index">
+    <li *ngFor="let item of getUnboughtItems(); let i = index">
       <span [class.bought]="item.bought">{{ item.name }}</span>
-      <button (click)="toggleBought(i)">✔</button>
+      <button (click)="toggleBought(i, false)">✔</button>
+      
       <button *ngIf="editingItem === i" (click)="saveEdit(i)">Salvar</button>
       <button *ngIf="editingItem !== i" (click)="startEditing(i)">Editar</button>
-      <button (click)="deleteItem(i)">Excluir</button>
+
+      <button (click)="deleteItem(i, false)">
+        <i class="fas fa-trash"></i>
+      </button>
     </li>
   </ul>
 
   <!-- Lista de itens comprados -->
   <h2>Itens Comprados</h2>
   <ul>
-    <li *ngFor="let item of shoppingListService.getBoughtItems(); let i = index">
+    <li *ngFor="let item of getBoughtItems(); let i = index">
       <span [class.bought]="item.bought">{{ item.name }}</span>
-      <button (click)="toggleBought(i)">Desmarcar</button>
-      <button (click)="deleteItem(i)">Excluir</button>
+      <button (click)="toggleBought(i, true)">Desmarcar</button>
+
+      <button (click)="deleteItem(i, true)">
+        <i class="fas fa-trash"></i>
+      </button>
     </li>
   </ul>
 </div>

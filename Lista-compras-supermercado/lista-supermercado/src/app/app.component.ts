@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ShoppingListService } from './shopping-list.service';
@@ -26,22 +26,42 @@ export class AppComponent {
 
   startEditing(index: number) {
     this.editingItem = index;
-    this.editingText = this.shoppingListService.items()[index].name; // Correção aqui
+    this.editingText = this.shoppingListService.getUnboughtItems()[index].name;
   }
 
   saveEdit(index: number) {
     if (this.editingText.trim()) {
-      this.shoppingListService.editItem(index, this.editingText.trim());
+      const unboughtItems = this.shoppingListService.getUnboughtItems();
+      const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]);
+      this.shoppingListService.editItem(itemIndex, this.editingText.trim());
       this.editingItem = null;
       this.editingText = '';
     }
   }
 
-  toggleBought(index: number) {
-    this.shoppingListService.toggleBought(index);
+  toggleBought(index: number, isBought: boolean) {
+    const items = isBought 
+      ? this.shoppingListService.getBoughtItems()
+      : this.shoppingListService.getUnboughtItems();
+
+    const itemIndex = this.shoppingListService.items().indexOf(items[index]);
+    this.shoppingListService.toggleBought(itemIndex);
   }
 
-  deleteItem(index: number) {
-    this.shoppingListService.deleteItem(index);
+  deleteItem(index: number, isBought: boolean) {
+    const items = isBought 
+      ? this.shoppingListService.getBoughtItems()
+      : this.shoppingListService.getUnboughtItems();
+
+    const itemIndex = this.shoppingListService.items().indexOf(items[index]);
+    this.shoppingListService.deleteItem(itemIndex);
+  }
+
+  getUnboughtItems() {
+    return this.shoppingListService.getUnboughtItems();
+  }
+
+  getBoughtItems() {
+    return this.shoppingListService.getBoughtItems();
   }
 }
