@@ -12,7 +12,7 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class AppComponent {
   newItem: string = '';
-  editingItem: number | null = null;
+  editingItem: number | null = null; // Índice do item que está sendo editado na lista completa
   editingText: string = '';
 
   constructor(public shoppingListService: ShoppingListService) {}
@@ -26,19 +26,18 @@ export class AppComponent {
 
   startEditing(index: number) {
     const unboughtItems = this.shoppingListService.getUnboughtItems();
-    const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]);
-    this.editingItem = itemIndex; // Corrigir para armazenar o índice global
-    this.editingText = unboughtItems[index].name;
+    const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]); // Pega o índice na lista completa
+    this.editingItem = itemIndex; // Armazena o índice do item na lista completa
+    this.editingText = unboughtItems[index].name; // Preenche o campo de edição com o texto atual do item
   }
-  
+
   saveEdit(index: number) {
     if (this.editingText.trim()) {
-      this.shoppingListService.editItem(index, this.editingText.trim());
-      this.editingItem = null;
-      this.editingText = '';
+      this.shoppingListService.editItem(index, this.editingText.trim()); // Atualiza o item na lista completa
+      this.editingItem = null; // Limpa o índice de edição
+      this.editingText = '';   // Limpa o texto da edição
     }
   }
-  
 
   toggleBought(index: number, isBought: boolean) {
     const items = isBought 
