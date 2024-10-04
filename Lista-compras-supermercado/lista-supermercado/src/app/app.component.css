@@ -1,42 +1,50 @@
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-  }
-  
-  input {
-    padding: 10px;
-    width: 70%;
-    margin-right: 10px;
-  }
-  
-  button {
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .bought {
-    text-decoration: line-through;
-    color: gray;
-  }
-  
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 70%;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+span {
+  flex-grow: 1;
+  text-align: left;
+}
+
+li button {
+  flex-shrink: 0; /* Os botões não encolherão, mesmo se o texto for grande */
+}
+
+.bought {
+  text-decoration: line-through;
+  color: gray;
+}

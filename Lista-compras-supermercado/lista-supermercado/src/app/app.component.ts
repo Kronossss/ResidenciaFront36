@@ -25,19 +25,20 @@ export class AppComponent {
   }
 
   startEditing(index: number) {
-    this.editingItem = index;
-    this.editingText = this.shoppingListService.getUnboughtItems()[index].name;
+    const unboughtItems = this.shoppingListService.getUnboughtItems();
+    const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]);
+    this.editingItem = itemIndex; // Corrigir para armazenar o índice global
+    this.editingText = unboughtItems[index].name;
   }
-
+  
   saveEdit(index: number) {
     if (this.editingText.trim()) {
-      const unboughtItems = this.shoppingListService.getUnboughtItems();
-      const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]);
-      this.shoppingListService.editItem(itemIndex, this.editingText.trim());
+      this.shoppingListService.editItem(index, this.editingText.trim());
       this.editingItem = null;
       this.editingText = '';
     }
   }
+  
 
   toggleBought(index: number, isBought: boolean) {
     const items = isBought 
