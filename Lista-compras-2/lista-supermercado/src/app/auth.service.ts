@@ -11,8 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   loginWithOAuth(provider: string) {
-    // Você pode usar uma biblioteca como angular-oauth2-oidc ou um provedor OAuth como Google/Facebook
-    // Exemplo de implementação com redirecionamento para o provedor OAuth
+    // Exemplo de implementação com redirecionamento para um provedor OAuth
     window.location.href = `https://oauth.provider.com/auth?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=token&scope=email`;
   }
 

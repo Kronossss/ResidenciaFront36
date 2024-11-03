@@ -1,67 +1,76 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ShoppingListService } from './shopping-list.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'Shopping List';
   newItem: string = '';
-  editingItem: number | null = null; // Índice do item que está sendo editado na lista completa
   editingText: string = '';
+  editingIndex: number | null = null; // Para editar itens
 
-  constructor(public shoppingListService: ShoppingListService) {}
+  constructor(private shoppingListService: ShoppingListService) {}
 
+  // Adicionar item à lista
   addItem() {
     if (this.newItem.trim()) {
-      this.shoppingListService.addItem(this.newItem.trim());
-      this.newItem = '';
+      const item = {
+        id: 0, // ID gerado pelo backend
+        title: this.newItem.trim(),
+        userId: 1, // Exemplo: ID de um usuário logado
+        included: false
+      };
+      this.shoppingListService.addItem(item).subscribe(() => {
+        this.newItem = '';
+        this.loadItems();
+      });
     }
   }
 
-  startEditing(index: number) {
-    const unboughtItems = this.shoppingListService.getUnboughtItems();
-    const itemIndex = this.shoppingListService.items().indexOf(unboughtItems[index]); // Pega o índice na lista completa
-    this.editingItem = itemIndex; // Armazena o índice do item na lista completa
-    this.editingText = unboughtItems[index].name; // Preenche o campo de edição com o texto atual do item
+  // Carregar todos os itens
+  loadItems() {
+    this.shoppingListService.getItems().subscribe(items => {
+      console.log(items); // Verifique os itens retornados
+    });
   }
 
-  saveEdit(index: number) {
+  // Editar um item
+  editItem(index: number) {
     if (this.editingText.trim()) {
-      this.shoppingListService.editItem(index, this.editingText.trim()); // Atualiza o item na lista completa
-      this.editingItem = null; // Limpa o índice de edição
-      this.editingText = '';   // Limpa o texto da edição
+      const item = {
+        title: this.editingText.trim(),
+        included: false,
+        userId: 1, // Exemplo: ID de um usuário logado
+        id: index // ID do item a ser editado
+      };
+      this.shoppingListService.editItem(index, item).subscribe(() => {
+        this.editingText = '';
+        this.loadItems();
+      });
     }
   }
 
-  toggleBought(index: number, isBought: boolean) {
-    const items = isBought 
-      ? this.shoppingListService.getBoughtItems()
-      : this.shoppingListService.getUnboughtItems();
-
-    const itemIndex = this.shoppingListService.items().indexOf(items[index]);
-    this.shoppingListService.toggleBought(itemIndex);
+  // Alternar status de um item (comprado/não comprado)
+  toggleItemStatus(item: any) {
+    this.shoppingListService.toggleItemStatus(item).subscribe(() => {
+      this.loadItems();
+    });
   }
 
-  deleteItem(index: number, isBought: boolean) {
-    const items = isBought 
-      ? this.shoppingListService.getBoughtItems()
-      : this.shoppingListService.getUnboughtItems();
-
-    const itemIndex = this.shoppingListService.items().indexOf(items[index]);
-    this.shoppingListService.deleteItem(itemIndex);
-  }
-
+  // Obter itens não comprados
   getUnboughtItems() {
-    return this.shoppingListService.getUnboughtItems();
+    this.shoppingListService.getUnboughtItems().subscribe(items => {
+      console.log("Unbought Items:", items);
+    });
   }
 
+  // Obter itens comprados
   getBoughtItems() {
-    return this.shoppingListService.getBoughtItems();
+    this.shoppingListService.getBoughtItems().subscribe(items => {
+      console.log("Bought Items:", items);
+    });
   }
 }

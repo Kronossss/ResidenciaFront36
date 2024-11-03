@@ -12,26 +12,45 @@ interface ShoppingItem {
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListService {
+
   private apiUrl = 'http://localhost:3000/shopping-list';
 
   constructor(private http: HttpClient) {}
 
-  getItems(userId: number): Observable<ShoppingItem[]> {
-    return this.http.get<ShoppingItem[]>(`${this.apiUrl}?userId=${userId}`);
+  // Método para obter todos os itens
+  getItems(): Observable<ShoppingItem[]> {
+    return this.http.get<ShoppingItem[]>(this.apiUrl);
   }
 
+  // Método para adicionar um item
   addItem(item: ShoppingItem): Observable<ShoppingItem> {
     return this.http.post<ShoppingItem>(this.apiUrl, item);
   }
 
-  deleteItem(itemId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${itemId}`);
+  // Método para editar um item
+  editItem(itemId: number, item: ShoppingItem): Observable<ShoppingItem> {
+    return this.http.put<ShoppingItem>(`${this.apiUrl}/${itemId}`, item);
   }
 
+  // Método para alternar o status de um item (comprado/não comprado)
   toggleItemStatus(item: ShoppingItem): Observable<ShoppingItem> {
     return this.http.put<ShoppingItem>(`${this.apiUrl}/${item.id}`, {
       ...item,
       included: !item.included
     });
+  }
+
+  // Método para obter itens não comprados
+  getUnboughtItems(): Observable<ShoppingItem[]> {
+    return this.getItems().pipe(
+      map(items => items.filter(item => !item.included))
+    );
+  }
+
+  // Método para obter itens comprados
+  getBoughtItems(): Observable<ShoppingItem[]> {
+    return this.getItems().pipe(
+      map(items => items.filter(item => item.included))
+    );
   }
 }
