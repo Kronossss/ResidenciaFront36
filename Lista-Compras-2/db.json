@@ -1,0 +1,46 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Roberto",
+      "email": "roberto@exemplo.com"
+    },
+    {
+      "id": "2",
+      "name": "Jorge",
+      "email": "jorge@exemplo.com"
+    }
+  ],
+  "shopping-list": [
+    {
+      "id": "5a42",
+      "nome": "teste",
+      "comprado": true,
+      "userId": 1
+    },
+    {
+      "id": "13bc",
+      "nome": "palito",
+      "comprado": true,
+      "userId": 1
+    },
+    {
+      "id": "3848",
+      "nome": "ovos",
+      "comprado": false,
+      "userId": 1
+    },
+    {
+      "id": "7c98",
+      "nome": "oleo",
+      "comprado": false,
+      "userId": 1
+    },
+    {
+      "id": "181c",
+      "nome": "agua",
+      "comprado": false,
+      "userId": 1
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<div class="lista-compras">
+
+  <input type="text" #novoItem (keyup.enter)="adicionarItem(novoItem.value); novoItem.value=''" placeholder="Digite o nome do item"/>
+  <h2>Itens Não Comprados</h2>
+  <div *ngFor="let item of itens">
+    <app-item-compras *ngIf="!item.comprado" [item]="item" (itemExcluido)="loadItens()"></app-item-compras>
+  </div>
+
+  <h2>Itens Comprados</h2>
+  <div *ngFor="let item of itens">
+    <app-item-compras *ngIf="item.comprado" [item]="item" (itemExcluido)="loadItens()"></app-item-compras>
+  </div>
+</div>
+
+
+
+
+
+

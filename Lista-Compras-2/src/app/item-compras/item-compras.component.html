@@ -1,0 +1,13 @@
+<div class="item-compras">
+
+  <span *ngIf="!editMode" [class.comprado]="item.comprado">{{ item.nome }}</span>
+  <input *ngIf="editMode" [(ngModel)]="newName" />
+  <button *ngIf="!editMode" (click)="editar()">🖌️</button>
+  <button *ngIf="!editMode" (click)="excluir()">🗑️</button>
+  <button *ngIf="!editMode" (click)="marcarComprado()">✅</button>
+  <button *ngIf="editMode" (click)="salvarEdicao()">💾</button>
+  <button *ngIf="editMode" (click)="cancelarEdicao()">❌</button>
+
+</div>
+
+

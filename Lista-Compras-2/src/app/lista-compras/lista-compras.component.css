@@ -1,0 +1,21 @@
+.lista-compras {
+  text-align: left;
+}
+
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  margin-right: 20px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+
+h2 {
+  font-size: 2.0rem;
+  color: #000000;
+  margin-top: 1rem;
+}
