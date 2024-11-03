@@ -1,42 +1,37 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface ShoppingItem {
-  name: string;
-  bought: boolean;
+  id: number;
+  title: string;
+  userId: number;
+  included: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingListService {
-  items = signal<ShoppingItem[]>([]);
+  private apiUrl = 'http://localhost:3000/shopping-list';
 
-  addItem(item: string) {
-    const currentItems = this.items(); // Obtém os itens atuais
-    this.items.set([...currentItems, { name: item, bought: false }]);
+  constructor(private http: HttpClient) {}
+
+  getItems(userId: number): Observable<ShoppingItem[]> {
+    return this.http.get<ShoppingItem[]>(`${this.apiUrl}?userId=${userId}`);
   }
 
-  editItem(index: number, newName: string) {
-    const currentItems = this.items();
-    currentItems[index].name = newName;
-    this.items.set([...currentItems]); // Atualiza o sinal com a nova lista
+  addItem(item: ShoppingItem): Observable<ShoppingItem> {
+    return this.http.post<ShoppingItem>(this.apiUrl, item);
   }
 
-  toggleBought(index: number) {
-    const currentItems = this.items();
-    currentItems[index].bought = !currentItems[index].bought;
-    this.items.set([...currentItems]); // Atualiza o sinal
+  deleteItem(itemId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${itemId}`);
   }
 
-  deleteItem(index: number) {
-    const currentItems = this.items();
-    currentItems.splice(index, 1); // Remove o item
-    this.items.set([...currentItems]); // Atualiza o sinal com a lista nova
-  }
-
-  getBoughtItems() {
-    return this.items().filter(item => item.bought);
-  }
-
-  getUnboughtItems() {
-    return this.items().filter(item => !item.bought);
+  toggleItemStatus(item: ShoppingItem): Observable<ShoppingItem> {
+    return this.http.put<ShoppingItem>(`${this.apiUrl}/${item.id}`, {
+      ...item,
+      included: !item.included
+    });
   }
 }
